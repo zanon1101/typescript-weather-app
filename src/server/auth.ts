@@ -1,10 +1,6 @@
 import { type GetServerSidePropsContext } from "next";
-import {
-  getServerSession,
-  type NextAuthOptions,
-  type DefaultSession,
-} from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import { getServerSession, type NextAuthOptions, type DefaultSession } from "next-auth";
+import GitHubProvider from "next-auth/providers/github";
 import { env } from "y/env.mjs";
 
 /**
@@ -44,9 +40,13 @@ export const authOptions: NextAuthOptions = {
     }),
   },
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    // DiscordProvider({
+    //   clientId: env.DISCORD_CLIENT_ID,
+    //   clientSecret: env.DISCORD_CLIENT_SECRET,
+    // }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID || "",
+      clientSecret: process.env.GITHUB_SECRET || "",
     }),
     /**
      * ...add more providers here.
