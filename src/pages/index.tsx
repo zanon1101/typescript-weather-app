@@ -2,7 +2,6 @@ import { type NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import { SearchInput } from "y/components/search-input";
-import { WeatherDisplay } from "y/components/weather-display";
 import { api } from "y/utils/api";
 
 const Home: NextPage = () => {
@@ -15,7 +14,6 @@ const Home: NextPage = () => {
             </Head>
             <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
                 <SearchInput />
-                <WeatherDisplay input={"London"} />
                 <AuthShowcase />
             </main>
         </>

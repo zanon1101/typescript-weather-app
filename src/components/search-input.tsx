@@ -1,16 +1,23 @@
+import React, { useState } from "react";
+
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+
+import { WeatherDisplay } from "./weather-display";
 
 export const SearchInput = () => {
-    const [searchInput, setSearchInput] = React.useState("");
+    const [searchInput, setSearchInput] = useState<string | null>("");
+
+    // const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setSearchInput(event.target.value);
+    // };
 
     console.log(searchInput);
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log("submitted");
-    }
+    };
 
     return (
         <>
@@ -23,6 +30,8 @@ export const SearchInput = () => {
                     onChange={(e) => setSearchInput(e.target.value)}
                 />
             </form>
+
+            <WeatherDisplay input={searchInput} />
         </>
-    ); 
-}
+    );
+};

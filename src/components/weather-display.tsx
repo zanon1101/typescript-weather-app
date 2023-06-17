@@ -47,16 +47,18 @@ export const WeatherDisplay = ({ input }: WeatherDisplayProps) => {
     const { locationData, weatherData } = useLocationAndWeatherData(input);
     console.log(weatherData);
 
+    if (!input) return null;
+
+    if (!locationData || !weatherData) return <div>No Results...</div>;
+
+    const { name, state, lat, lon } = (locationData[0] as LocationData) || {};
+
+    if (!name || !state || !lat || !lon) return <div>No Results...</div>;
+
     return (
         <div className="text-slate-400">
-            {locationData && (
-                <pre>
-                    {JSON.stringify(
-                        `${locationData[0].name}, ${locationData[0].state} - Lat: ${locationData[0].lat} Lon: ${locationData[0].lon}`,
-                        null,
-                        4
-                    )}
-                </pre>
+            {locationData && weatherData && (
+                <pre>{JSON.stringify(`${name}, ${state} - Lat: ${lat} Lon: ${lon}`, null, 4)}</pre>
             )}
             {weatherData && <pre>{JSON.stringify(weatherData.main.temp_min, null, 4)}</pre>}
         </div>
