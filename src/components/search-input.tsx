@@ -3,13 +3,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 export const SearchInput = () => {
+    const [searchInput, setSearchInput] = React.useState("");
+
+    console.log(searchInput);
+
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        console.log("submitted");
+    }
+
     return (
-      <>
-        {/* <FontAwesomeIcon icon={faSearch} size="xs" className="text-white"/> */}
-        <input
-          className="bg-transparent text-xl text-white outline-none"
-          placeholder="Search for a location..."
-        />
-      </>
+        <>
+            {/* <FontAwesomeIcon icon={faSearch} size="xs" className="text-white"/> */}
+            <form method="get" onSubmit={handleSubmit}>
+                <input
+                    className="bg-transparent text-xl text-white outline-none"
+                    placeholder="Search for a location..."
+                    value={searchInput ?? ""}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                />
+            </form>
+        </>
     ); 
 }

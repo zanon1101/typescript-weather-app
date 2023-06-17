@@ -1,38 +1,22 @@
-export type LocationData = {
-     name: string;
-     local_names: {
-         [key: string]: string;
-     };
-     lat: number;
-     lon: number;
-     country: string;
-     state: string;
- }
- 
- export const getLocation = async (city: string, stateCode: string, countryCode: string): Promise<LocationData> => {
-    // const apiKey = process.env.WEATHER_API_KEY ?? '';
-    const apiKey = "ac9f17c1797aeeab5ede29ce1b75fc4f";
-    const limit = 1;
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${stateCode},${countryCode}&limit=${limit}&appid=${apiKey}`;
+import { type WeatherData } from "./module.d";
 
-    // const url = new URL(`/geo/1.0/direct`, `http://api.openweathermap.org`);
-    // const queryParams = new URLSearchParams({
-    //     q: `${city},${stateCode},${countryCode}`,
-    //     limit: limit.toString(),
-    //     appid: apiKey
-    // })
-    // url.search = queryParams.toString();
+export const getWeather = async (lat: number, lon: number, units?: string): Promise<WeatherData> => {
+    if (!lat || !lon) {
+        throw new Error(`Latitude and longitude are required lat: ${lat} lon: ${lon}`);
+    }
+
+    const apiKey = "ac9f17c1797aeeab5ede29ce1b75fc4f";
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
 
     try {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(response.statusText);
         }
-        const data: LocationData = await response.json() as LocationData; // Why do I have to specify the type twice?
+        const data: WeatherData = (await response.json()) as WeatherData; // Why do I have to specify the type twice?
         return data;
     } catch (error) {
         console.error(error);
         throw error;
     }
-}
-
+};
