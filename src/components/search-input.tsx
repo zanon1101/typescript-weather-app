@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import useDebounce from "y/hooks/useDebounce";
+import Image from "next/image";
 
 import searchSVG from "y/assets/search.svg";
+import WeatherIcon from "./weather-icon";
 
 import { getWeather } from "y/api/weather";
+import { WeatherResults } from "./weather-results";
+
 import { type WeatherData } from "y/api/module";
 
 export const SearchInput = () => {
@@ -38,6 +41,8 @@ export const SearchInput = () => {
 
     if (search === "") weather === null;
 
+    const condition = weather?.current?.condition?.code;
+
     return (
         <>
             <div className="flex items-center justify-center">
@@ -55,16 +60,8 @@ export const SearchInput = () => {
                 </div>
             </div>
             <br />
-            {weather && search && (
-                <div className="text-1xl p-4 text-[#FFC2C2]">
-                    <div>
-                        Location: {weather?.location?.name}, {weather?.location?.region}, {weather?.location?.country}
-                    </div>
-                    <div>Feels like: {weather?.current.feelslike_c}c</div>
-                    <div>Condition: {weather?.current?.condition?.text}</div>
-                    <div>Last updated: {weather?.current?.last_updated}</div>
-                </div>
-            )}
+            <WeatherIcon code={condition} />
+            {weather && <WeatherResults weather={weather} />}
         </>
     );
 };

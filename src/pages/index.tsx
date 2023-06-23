@@ -4,12 +4,6 @@ import Head from "next/head";
 import { SearchInput } from "y/components/search-input";
 import { api } from "y/utils/api";
 
-import Image from "next/image";
-import blobLeft from "y/assets/blob-left.svg";
-import blobRight from "y/assets/blob-right.svg";
-import { Container } from "postcss";
-import { CardContainer } from "y/components/container";
-
 const Home: NextPage = () => {
     return (
         <>
@@ -20,7 +14,7 @@ const Home: NextPage = () => {
             </Head>
             <main className="min-h-screen bg-[#1E1E1E]">
                 <div className="flex min-h-screen items-center justify-center">
-                    <div className="rounded-lg shadow-md">
+                    <div className="shadow-md">
                         <SearchInput />
                     </div>
                 </div>
