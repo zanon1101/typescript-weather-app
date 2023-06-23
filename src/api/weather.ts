@@ -1,19 +1,25 @@
 import { type WeatherData } from "./module.d";
 
-export const getWeather = async (lat: number, lon: number, units?: string): Promise<WeatherData> => {
-    if (!lat || !lon) {
-        throw new Error(`Latitude and longitude are required lat: ${lat} lon: ${lon}`);
+export const getWeather = async (location: string): Promise<WeatherData> => {
+    if (!location) {
+        throw new Error("Location is required");
     }
 
-    const apiKey = "ac9f17c1797aeeab5ede29ce1b75fc4f";
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+    const apiKey = "f00cdafab9984a6999961430232306";
+    const url = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=1&aqi=no&alerts=no`;
 
     try {
         const response = await fetch(url);
+        console.log(response);
         if (!response.ok) {
-            throw new Error(response.statusText);
+            console.error(response.statusText);
         }
+        if (response.status === 400) {
+            throw new Error("Bad request");
+        }
+
         const data: WeatherData = (await response.json()) as WeatherData; // Why do I have to specify the type twice?
+        console.log(data);
         return data;
     } catch (error) {
         console.error(error);
